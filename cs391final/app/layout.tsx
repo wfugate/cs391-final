@@ -1,3 +1,4 @@
+//start code William Fugate 
 import type { Metadata } from "next";
 import "@fontsource/titillium-web/300.css";
 import "@fontsource/titillium-web/400.css";
@@ -26,3 +27,4 @@ export default function RootLayout({
     </html>
   );
 }
+//end code William Fugate 

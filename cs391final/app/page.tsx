@@ -1,3 +1,4 @@
+//start code William Fugate 
 'use client';
 
 import { Box, Typography, Button, Container } from '@mui/material';
@@ -44,3 +45,4 @@ export default function Home() {
     </Container>
   );
 }
+//end code William Fugate 

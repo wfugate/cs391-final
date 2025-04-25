@@ -6,7 +6,7 @@ import { Driver } from "../types";
 interface DriverCardProps {
   driver: Driver;
 }
-
+//start code William Fugate 
 export default function DriverCard({ driver }: DriverCardProps) {
   
   const textColor = '#ffffff';
@@ -118,3 +118,4 @@ export default function DriverCard({ driver }: DriverCardProps) {
     </Card>
   );
 }
+//end code William Fugate 

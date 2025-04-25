@@ -1,3 +1,4 @@
+//start code William Fugate  
 'use client';
 
 import { ReactNode } from 'react';
@@ -49,3 +50,4 @@ export default function F1ThemeProvider({ children }: { children: ReactNode }) {
     </AppRouterCacheProvider>
   );
 }
+//end code William Fugate 
