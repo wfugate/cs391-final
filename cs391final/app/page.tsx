@@ -1,4 +1,4 @@
-//william fugate
+// app/page.tsx (only adding to William's existing code)
 'use client';
 
 import { Box, Typography, Button, Container, Stack } from '@mui/material';
@@ -14,7 +14,7 @@ export default function Home() {
                     F1 Race Data
                 </Typography>
                 <Typography variant="h5" component="h2" gutterBottom>
-                    Explore data from the Open F1 API
+                    Explore Formula 1 data
                 </Typography>
 
                 <Stack direction="column" spacing={2} sx={{ mt: 4 }}>
@@ -32,7 +32,7 @@ export default function Home() {
                     </Button>
                     <Button
                         variant="outlined"
-                        onClick={() => router.push('/telemetry')}
+                        onClick={() => router.push('/results')}
                         sx={{
                             color: '#e10600',
                             borderColor: '#e10600',
@@ -41,11 +41,10 @@ export default function Home() {
                             }
                         }}
                     >
-                        View Live Telemetry
+                        View Race Results
                     </Button>
                 </Stack>
             </Box>
         </Container>
     );
 }
-//william fugate
