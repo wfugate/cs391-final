@@ -1,4 +1,4 @@
-// app/page.tsx (only adding to William's existing code)
+//William Fugate + Kelvin Fang
 'use client';
 
 import { Box, Typography, Button, Container, Stack } from '@mui/material';
@@ -48,3 +48,4 @@ export default function Home() {
         </Container>
     );
 }
+//William Fugate

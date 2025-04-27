@@ -1,4 +1,4 @@
-// app/api/results/route.ts
+//Kelvin Fang
 import { NextResponse } from 'next/server';
 import { ErgastRaceResult } from '../../types/ergast';
 
@@ -28,3 +28,4 @@ export async function GET(request: Request) {
         );
     }
 }
+//Kelvin Fang

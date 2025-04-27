@@ -19,7 +19,7 @@ export async function fetchDrivers() {
   //end code William Fugate 
 
 
-///kf
+//Kelvin Fang
 type Session = {
     session_key: number;
     date_start: string;
@@ -51,4 +51,4 @@ export async function fetchLatestSessionKey() {
     }
 }
 
-//kf
+//Kelvin Fang

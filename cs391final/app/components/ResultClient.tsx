@@ -1,11 +1,12 @@
-
+//Kelvin Fang
 'use client';
 
-import { Container, Typography, Box, Button, CircularProgress } from "@mui/material";
+import { Container, Typography, Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import RaceResultCard from "./RaceResultCard";
 import { ErgastRace } from "../types/ergast";
+import LoadingScreen from "./LoadingScreen";
 
 export default function ResultsClient() {
     const router = useRouter();
@@ -15,6 +16,9 @@ export default function ResultsClient() {
 
     useEffect(() => {
         const fetchResults = async () => {
+            const MIN_LOADING_TIME = 3000;
+            const start = Date.now();
+
             try {
                 const response = await fetch('/api/results');
                 if (!response.ok) {
@@ -29,7 +33,13 @@ export default function ResultsClient() {
             } catch (err) {
                 setError(err instanceof Error ? err.message : 'Unknown error');
             } finally {
-                setLoading(false);
+                const elapsed = Date.now() - start;
+                const remaining = MIN_LOADING_TIME - elapsed;
+                if (remaining > 0) {
+                    setTimeout(() => setLoading(false), remaining);
+                } else {
+                    setLoading(false);
+                }
             }
         };
 
@@ -37,11 +47,7 @@ export default function ResultsClient() {
     }, []);
 
     if (loading) {
-        return (
-            <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
-                <CircularProgress />
-            </Box>
-        );
+        return <LoadingScreen />;
     }
 
     if (error) {
@@ -109,3 +115,4 @@ export default function ResultsClient() {
         </Container>
     );
 }
+//Kelvin Fang

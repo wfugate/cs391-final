@@ -1,4 +1,4 @@
-
+//Kelvin Fang
 export interface ErgastRaceResult {
     MRData: {
         RaceTable: {
@@ -55,3 +55,4 @@ export interface ErgastResult {
         };
     };
 }
+//Kelvin Fang
