@@ -1,48 +1,51 @@
-//start code William Fugate 
+//william fugate
 'use client';
 
-import { Box, Typography, Button, Container } from '@mui/material';
+import { Box, Typography, Button, Container, Stack } from '@mui/material';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const router = useRouter();
-  
-  return (
-    <Container maxWidth="md">
-      <Box 
-        sx={{ 
-          minHeight: '100vh', 
-          display: 'flex', 
-          flexDirection: 'column', 
-          justifyContent: 'center', 
-          alignItems: 'center',
-          gap: 4
-        }}
-      >
-        <Typography variant="h2" component="h1" align="center">
-          F1 Race Data
-        </Typography>
-        
-        <Typography variant="body1" align="center">
-          Explore data from the Open F1 API
-        </Typography>
-        
-        <Button 
-          variant="contained" 
-          size="large" 
-          onClick={() => router.push('/drivers')}
-          sx={{ 
-            mt: 2, 
-            bgcolor: '#e10600',
-            '&:hover': {
-              bgcolor: '#b30500',
-            }
-          }}
-        >
-          View F1 Drivers
-        </Button>
-      </Box>
-    </Container>
-  );
+    const router = useRouter();
+
+    return (
+        <Container maxWidth="sm">
+            <Box sx={{ my: 4, textAlign: 'center' }}>
+                <Typography variant="h2" component="h1" gutterBottom>
+                    F1 Race Data
+                </Typography>
+                <Typography variant="h5" component="h2" gutterBottom>
+                    Explore data from the Open F1 API
+                </Typography>
+
+                <Stack direction="column" spacing={2} sx={{ mt: 4 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => router.push('/drivers')}
+                        sx={{
+                            bgcolor: '#e10600',
+                            '&:hover': {
+                                bgcolor: '#b30500',
+                            }
+                        }}
+                    >
+                        View F1 Drivers
+                    </Button>
+                    <Button
+                        variant="outlined"
+                        onClick={() => router.push('/telemetry')}
+                        sx={{
+                            color: '#e10600',
+                            borderColor: '#e10600',
+                            '&:hover': {
+                                borderColor: '#b30500',
+                            }
+                        }}
+                    >
+                        View Live Telemetry
+                    </Button>
+                </Stack>
+            </Box>
+        </Container>
+    );
 }
-//end code William Fugate 
+//william fugate
