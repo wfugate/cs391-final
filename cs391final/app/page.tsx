@@ -1,4 +1,4 @@
-//William Fugate + Kelvin Fang
+//William Fugate + Kelvin Fang + Ethan Key
 'use client';
 
 import { Box, Typography, Button, Container, Stack } from '@mui/material';
@@ -42,6 +42,19 @@ export default function Home() {
                         }}
                     >
                         View Race Results
+                    </Button>
+                    <Button
+                        variant="contained"
+                        onClick={() => router.push('/standings')}
+                        sx={{
+                            color: '#000000',
+                            bgcolor: '#e10600',
+                            '&:hover': {
+                                bgcolor: '#b30500',
+                            }
+                        }}
+                    >
+                        View Current Standings
                     </Button>
                 </Stack>
             </Box>
