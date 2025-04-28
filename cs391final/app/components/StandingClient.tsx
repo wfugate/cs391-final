@@ -1,0 +1,178 @@
+// Ethan Key
+'use client';
+
+import { Container, Typography, Box, Button, Stack } from "@mui/material";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import LoadingScreen from "../components/LoadingScreen";
+
+type DriverStanding = {
+    position: string;
+    points: string;
+    wins: string;
+    Driver: {
+        givenName: string;
+        familyName: string;
+    };
+    Constructors: { name: string }[];
+};
+
+type ConstructorStanding = {
+    position: string;
+    points: string;
+    wins: string;
+    Constructor: {
+        name: string;
+        nationality: string;
+    };
+};
+
+export default function StandingsClient() {
+    const router = useRouter();
+    const [driverStandings, setDriverStandings] = useState<DriverStanding[]>([]);
+    const [constructorStandings, setConstructorStandings] = useState<ConstructorStanding[]>([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState<string | null>(null);
+    const [view, setView] = useState<'drivers' | 'constructors'>('drivers');
+
+    const fetchDriverStandings = async () => {
+        try {
+            const response = await fetch('/api/driver');
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            const data = await response.json();
+            const standingsList = data.MRData.StandingsTable.StandingsLists[0];
+            setDriverStandings(standingsList.DriverStandings || []);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Unknown error');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchConstructorStandings = async () => {
+        try {
+            const response = await fetch('/api/constructor');
+            if (!response.ok) throw new Error(`Error: ${response.status}`);
+            const data = await response.json();
+            const standingsList = data.MRData.StandingsTable.StandingsLists[0];
+            setConstructorStandings(standingsList.ConstructorStandings || []);
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Unknown error');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    useEffect(() => {
+        fetchDriverStandings();
+    }, []);
+
+    const handleToggleView = async (newView: 'drivers' | 'constructors') => {
+        if (newView === view) return;
+        setView(newView);
+        setLoading(true);
+        if (newView === 'drivers') {
+            fetchDriverStandings();
+        } else {
+            fetchConstructorStandings();
+        }
+    };
+
+    if (loading) {
+        return <LoadingScreen />;
+    }
+
+    if (error) {
+        return (
+            <Container maxWidth="xl" sx={{ py: 4 }}>
+                <Typography color="error" align="center" sx={{ mt: 4 }}>
+                    {error}
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 2 }}>
+                    <Button
+                        variant="contained"
+                        onClick={() => router.push('/')}
+                        sx={{ bgcolor: '#e10600', '&:hover': { bgcolor: '#b30500' } }}
+                    >
+                        Return Home
+                    </Button>
+                </Box>
+            </Container>
+        );
+    }
+
+    return (
+        <Container maxWidth="xl" sx={{ py: 4 }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
+                <Typography variant="h2" component="h1" sx={{ fontFamily: '"Titillium Web", sans-serif', fontWeight: 700 }}>
+                    {view === 'drivers' ? 'Current Season Driver Standings' : 'Current Season Constructor Standings'}
+                </Typography>
+                <Button
+                    variant="contained"
+                    onClick={() => router.push('/')}
+                    sx={{ bgcolor: '#e10600', '&:hover': { bgcolor: '#b30500' } }}
+                >
+                    Return Home
+                </Button>
+            </Box>
+
+            <Stack direction="row" spacing={2} sx={{ mb: 4, justifyContent: 'center' }}>
+                <Button
+                    variant={view === 'drivers' ? 'contained' : 'outlined'}
+                    onClick={() => handleToggleView('drivers')}
+                    sx={{
+                        bgcolor: view === 'drivers' ? '#e10600' : undefined,
+                        color: view === 'drivers' ? '#fff' : '#e10600',
+                        borderColor: '#e10600',
+                        '&:hover': { bgcolor: '#b30500', borderColor: '#b30500' },
+                    }}
+                >
+                    Driver Standings
+                </Button>
+                <Button
+                    variant={view === 'constructors' ? 'contained' : 'outlined'}
+                    onClick={() => handleToggleView('constructors')}
+                    sx={{
+                        bgcolor: view === 'constructors' ? '#e10600' : undefined,
+                        color: view === 'constructors' ? '#fff' : '#e10600',
+                        borderColor: '#e10600',
+                        '&:hover': { bgcolor: '#b30500', borderColor: '#b30500' },
+                    }}
+                >
+                    Constructor Standings
+                </Button>
+            </Stack>
+
+            <Box sx={{
+                display: 'grid',
+                gridTemplateColumns: {
+                    xs: '1fr',
+                    sm: 'repeat(2, 1fr)',
+                    md: 'repeat(3, 1fr)',
+                    lg: 'repeat(4, 1fr)'
+                },
+                gap: 3
+            }}>
+                {view === 'drivers' ? (
+                    driverStandings.map((standing) => (
+                        <Box key={standing.position} sx={{ p: 2, border: '1px solid #ccc', borderRadius: 2 }}>
+                            <Typography variant="h6">{standing.position}. {standing.Driver.givenName} {standing.Driver.familyName}</Typography>
+                            <Typography variant="body2">Points: {standing.points}</Typography>
+                            <Typography variant="body2">Wins: {standing.wins}</Typography>
+                            <Typography variant="body2">Team: {standing.Constructors[0]?.name}</Typography>
+                        </Box>
+                    ))
+                ) : (
+                    constructorStandings.map((standing) => (
+                        <Box key={standing.position} sx={{ p: 2, border: '1px solid #ccc', borderRadius: 2 }}>
+                            <Typography variant="h6">{standing.position}. {standing.Constructor.name}</Typography>
+                            <Typography variant="body2">Points: {standing.points}</Typography>
+                            <Typography variant="body2">Wins: {standing.wins}</Typography>
+                            <Typography variant="body2">Nationality: {standing.Constructor.nationality}</Typography>
+                        </Box>
+                    ))
+                )}
+            </Box>
+        </Container>
+    );
+}
