@@ -1,6 +1,6 @@
 //Kelvin Fang
 import { NextResponse } from 'next/server';
-import { ErgastRaceResult } from '../../types/ergast';
+import { RaceResult } from '../../types/ergast';
 
 export async function GET(request: Request) {
     const { searchParams } = new URL(request.url);
@@ -19,7 +19,7 @@ export async function GET(request: Request) {
             );
         }
 
-        const data: ErgastRaceResult = await response.json();
+        const data: RaceResult = await response.json();
         return NextResponse.json(data);
     } catch  {
         return NextResponse.json(
