@@ -7,8 +7,7 @@ export async function GET() {
         const res = await fetch('http://ergast.com/api/f1/current/driverStandings.json');
         const data = await res.json();
         return NextResponse.json(data);
-    } catch (error){
-        console.error("Failed to fetch drivers:", error);
+    } catch {
         return NextResponse.json({ error: 'Failed to fetch driver standings' }, { status: 500 });
     }
 }
