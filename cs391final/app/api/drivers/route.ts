@@ -1,17 +1,35 @@
 //William Fugate
 import { NextResponse } from 'next/server';
 
+//cache
+let cachedData: any = null;
+let cacheTime = 0;
+const CACHE_DURATION = 60 * 1000; // 1 minute cache
+
 export async function GET() { //get drivers from OpenF1 API
   try {
+    //return cached data if available and up to date
+    if (cachedData && Date.now() - cacheTime < CACHE_DURATION) {
+      return NextResponse.json(cachedData);
+    }
+    
     const response = await fetch(
       "https://api.openf1.org/v1/drivers?session_key=latest", //fetch the latest drivers
     );
     
     if (!response.ok) { //ensure response is ok
+      //if rate limited but we have cached data, return it even if expired
+      if (response.status === 429 && cachedData) {
+        return NextResponse.json(cachedData);
+      }
       throw new Error(`Error fetching drivers: ${response.status}`);
     }
     
     const drivers = await response.json();
+    //update cache
+    cachedData = drivers;
+    cacheTime = Date.now();
+    
     return NextResponse.json(drivers); //return the drivers as JSON
   } catch (error) {
     console.error("Failed to fetch drivers:", error);
