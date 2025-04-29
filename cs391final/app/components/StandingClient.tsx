@@ -1,7 +1,7 @@
 // Ethan Key
 'use client';
 
-import { Container, Typography, Box, Button, Stack } from "@mui/material";
+import { Container, Typography, Box, Button, Stack, Card, CardContent } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingScreen from "../components/LoadingScreen";
@@ -160,21 +160,61 @@ export default function StandingsClient() {
             }}>
                 {view === 'drivers' ? (
                     driverStandings.map((standing) => (
-                        <Box key={standing.position} sx={{ p: 2, border: '1px solid #ccc', borderRadius: 2 }}>
-                            <Typography variant="h6">{standing.position}. {standing.Driver.givenName} {standing.Driver.familyName}</Typography>
-                            <Typography variant="body2">Points: {standing.points}</Typography>
-                            <Typography variant="body2">Wins: {standing.wins}</Typography>
-                            <Typography variant="body2">Team: {standing.Constructors[0]?.name}</Typography>
-                        </Box>
+                        <Card key={standing.position} sx={{
+                            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+                            color: 'white',
+                            border: '1px solid rgba(255, 255, 255, 0.12)',
+                            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                            '&:hover': {
+                                transform: 'translateY(-4px)',
+                                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.3)',
+                            }
+                        }}>
+                            <CardContent>
+                                <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                                    {standing.position}. {standing.Driver.givenName} {standing.Driver.familyName}
+                                </Typography>
+                                <Typography variant="body2" sx={{ mt: 1, opacity: 0.85 }}>
+                                    Points: <strong>{standing.points}</strong>
+                                </Typography>
+                                <Typography variant="body2" sx={{ opacity: 0.85 }}>
+                                    Wins: <strong>{standing.wins}</strong>
+                                </Typography>
+                                <Typography variant="body2" sx={{ opacity: 0.85 }}>
+                                    Team: <strong>{standing.Constructors[0]?.name}</strong>
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                        
                     ))
                 ) : (
                     constructorStandings.map((standing) => (
-                        <Box key={standing.position} sx={{ p: 2, border: '1px solid #ccc', borderRadius: 2 }}>
-                            <Typography variant="h6">{standing.position}. {standing.Constructor.name}</Typography>
-                            <Typography variant="body2">Points: {standing.points}</Typography>
-                            <Typography variant="body2">Wins: {standing.wins}</Typography>
-                            <Typography variant="body2">Nationality: {standing.Constructor.nationality}</Typography>
-                        </Box>
+                        <Card key={standing.position} sx={{
+                            background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
+                            color: 'white',
+                            border: '1px solid rgba(255, 255, 255, 0.12)',
+                            transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+                            '&:hover': {
+                                transform: 'translateY(-4px)',
+                                boxShadow: '0 10px 20px rgba(0, 0, 0, 0.3)',
+                            }
+                        }}>
+                            <CardContent>
+                                <Typography variant="h5" sx={{ fontWeight: 700 }}>
+                                    {standing.position}. {standing.Constructor.name}
+                                </Typography>
+                                <Typography variant="body2" sx={{ mt: 1, opacity: 0.85 }}>
+                                    Points: <strong>{standing.points}</strong>
+                                </Typography>
+                                <Typography variant="body2" sx={{ opacity: 0.85 }}>
+                                    Wins: <strong>{standing.wins}</strong>
+                                </Typography>
+                                <Typography variant="body2" sx={{ opacity: 0.85 }}>
+                                    Nationality: <strong>{standing.Constructor.nationality}</strong>
+                                </Typography>
+                            </CardContent>
+                        </Card>
+                        
                     ))
                 )}
             </Box>
