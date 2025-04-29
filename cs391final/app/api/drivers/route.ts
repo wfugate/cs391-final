@@ -5,7 +5,7 @@ import { Driver } from '../../types/ergast';
 //cache initialization
 let cachedData: Driver[] | null = null;
 let cacheTime = 0;
-const CACHE_DURATION = 60 * 1000; // 1 minute cache
+const CACHE_DURATION = 15*  60 * 1000; // 15 minute cache
 
 export async function GET() { //get drivers from OpenF1 API
   try {
