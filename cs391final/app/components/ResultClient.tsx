@@ -16,7 +16,7 @@ export default function ResultsClient() {
 
     useEffect(() => {
         const fetchResults = async () => {
-            const MIN_LOADING_TIME = 3000;
+            const MIN_LOADING_TIME = 3300;
             const start = Date.now();
 
             try {

@@ -14,7 +14,7 @@ const countryCodeToName: Record<string, string> = {
   "NED": "Dutch",
   "MON": "Monegasque",
   "ESP": "Spanish",
-  "DEU": "German",
+  "GER": "German",
   "FRA": "French",
   "AUS": "Australian",
   "MEX": "Mexican",
