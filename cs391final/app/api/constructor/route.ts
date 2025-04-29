@@ -8,6 +8,7 @@ export async function GET() {
         const data = await res.json();
         return NextResponse.json(data);
     } catch (error) {
+        console.error("Failed to fetch drivers:", error);
         return NextResponse.json({ error: 'Failed to fetch constructor standings' }, { status: 500 });
     }
 }

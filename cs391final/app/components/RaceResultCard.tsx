@@ -9,6 +9,8 @@ interface RaceResultCardProps {
 }
 
 export default function RaceResultCard({ result }: RaceResultCardProps) {
+
+    //function to get race result status color
     const getStatusColor = () => {
         if (result.status === 'Finished') return '#4CAF50';
         if (result.status.startsWith('+')) return '#FFC107';
