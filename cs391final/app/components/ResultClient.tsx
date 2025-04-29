@@ -88,6 +88,8 @@ export default function ResultsClient() {
                     variant="contained"
                     onClick={() => router.push('/')}
                     sx={{
+                        padding: 1,
+            fontSize: '1.2rem',
                         bgcolor: '#e10600',
                         '&:hover': {
                             bgcolor: '#b30500',

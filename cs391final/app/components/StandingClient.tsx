@@ -92,7 +92,9 @@ export default function StandingsClient() {
                     <Button
                         variant="contained"
                         onClick={() => router.push('/')}
-                        sx={{ bgcolor: '#e10600', '&:hover': { bgcolor: '#b30500' } }}
+                        sx={{
+                             
+                            bgcolor: '#e10600', '&:hover': { bgcolor: '#b30500' } }}
                     >
                         Return Home
                     </Button>
@@ -110,7 +112,10 @@ export default function StandingsClient() {
                 <Button
                     variant="contained"
                     onClick={() => router.push('/')}
-                    sx={{ bgcolor: '#e10600', '&:hover': { bgcolor: '#b30500' } }}
+                    sx={{ 
+                        padding: 1,
+            fontSize: '1.2rem',
+            bgcolor: '#e10600', '&:hover': { bgcolor: '#b30500' } }}
                 >
                     Return Home
                 </Button>

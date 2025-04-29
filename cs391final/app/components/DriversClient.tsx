@@ -5,7 +5,7 @@ import { Container, Typography, Box} from "@mui/material";
 import { useState, useEffect } from "react";
 import DriverCard from "./DriverCard";
 import LoadingScreen from "./LoadingScreen";
-import DriversHeader from "./DriversHeader";
+import F1Header from "./F1Header";
 import { Driver } from "../types/ergast";
 
 export default function DriversClient() {
@@ -52,18 +52,18 @@ export default function DriversClient() {
 
   if (error) { //show error message if there is an error
     return (
-      <Typography sx={
+      <Typography variant='h1' sx={
         {
-          color: 'red',
-          backgroundColor: 'red',
+          color: 'black',
         }
-      }>ERROR!</Typography>
+      }>Rate limit hit, refresh the page.</Typography>
     );
   }
   
   return (
     <Container maxWidth="xl" sx={{ py: 4 }}>
-      <DriversHeader /> {/* header for the drivers page */}
+
+      <F1Header title='F1 Drivers' /> {/* header for the drivers page */}
       
       <Box sx={{ 
         display: 'grid', 
