@@ -1,14 +1,15 @@
 //William Fugate
 import { NextResponse } from 'next/server';
+import { Driver } from '../../types/ergast';
 
-//cache
-let cachedData: any = null;
+//cache initialization
+let cachedData: Driver[] | null = null;
 let cacheTime = 0;
 const CACHE_DURATION = 60 * 1000; // 1 minute cache
 
 export async function GET() { //get drivers from OpenF1 API
   try {
-    //return cached data if available and up to date
+    //return cached data if available and fresh
     if (cachedData && Date.now() - cacheTime < CACHE_DURATION) {
       return NextResponse.json(cachedData);
     }
@@ -25,7 +26,7 @@ export async function GET() { //get drivers from OpenF1 API
       throw new Error(`Error fetching drivers: ${response.status}`);
     }
     
-    const drivers = await response.json();
+    const drivers = await response.json() as Driver[];
     //update cache
     cachedData = drivers;
     cacheTime = Date.now();
