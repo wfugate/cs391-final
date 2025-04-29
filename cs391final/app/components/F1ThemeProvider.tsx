@@ -4,9 +4,9 @@
 import { ReactNode } from 'react';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
-import CssBaseline from '@mui/material/CssBaseline';
+import CssBaseline from '@mui/material/CssBaseline'; 
 
-const theme = createTheme({
+const theme = createTheme({ //general styles for button and typography standardization
   typography: {
     fontFamily: '"Titillium Web", Arial, sans-serif',
     h1: {
@@ -42,9 +42,10 @@ const theme = createTheme({
 
 export default function F1ThemeProvider({ children }: { children: ReactNode }) {
   return (
-    <AppRouterCacheProvider>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
+    <AppRouterCacheProvider> {/* styling helpers */}
+      <ThemeProvider theme={theme}> {/* styling helpers */}
+        <CssBaseline /> {/* styling helpers */}
+        
         {children}
       </ThemeProvider>
     </AppRouterCacheProvider>

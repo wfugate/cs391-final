@@ -2,10 +2,10 @@
 'use client';
 
 import { Card, CardContent, Typography, Box } from "@mui/material";
-import { ErgastResult } from "../types/ergast";
+import { Result } from "../types/ergast";
 
 interface RaceResultCardProps {
-    result: ErgastResult;
+    result: Result;
 }
 
 export default function RaceResultCard({ result }: RaceResultCardProps) {

@@ -8,57 +8,62 @@ export default function Home() {
     const router = useRouter();
 
     return (
-        <Container maxWidth="sm">
+        <Container maxWidth="md">
             <Box sx={{ my: 4, textAlign: 'center' }}>
-                <Typography variant="h2" component="h1" gutterBottom>
-                    F1 Race Data
+                <Typography variant= "h1" gutterBottom>
+                    F1 Data
                 </Typography>
-                <Typography variant="h5" component="h2" gutterBottom>
+                <Typography variant="h4" component="h2" gutterBottom> {/* h2 component for better SEO */}
                     Explore Formula 1 data
                 </Typography>
 
+                {/* buttons */}
                 <Stack direction="column" spacing={2} sx={{ mt: 4 }}>
                     <Button
                         variant="contained"
                         onClick={() => router.push('/drivers')}
                         sx={{
+                            padding: 1,
+                            fontSize: '1.2rem',
                             bgcolor: '#e10600',
                             '&:hover': {
                                 bgcolor: '#b30500',
                             }
                         }}
                     >
-                        View F1 Drivers
+                        F1 Drivers
                     </Button>
                     <Button
-                        variant="outlined"
+                        variant="contained"
                         onClick={() => router.push('/results')}
                         sx={{
-                            color: '#e10600',
-                            borderColor: '#e10600',
+                            padding: 1,
+                            fontSize: '1.2rem',
+                            bgcolor: '#e10600',
                             '&:hover': {
-                                borderColor: '#b30500',
+                                bgcolor: '#b30500',
                             }
                         }}
                     >
-                        View Race Results
+                        Race Results
                     </Button>
                     <Button
                         variant="contained"
                         onClick={() => router.push('/standings')}
                         sx={{
-                            color: '#000000',
+                            padding: 1,
+                            fontSize: '1.2rem',
                             bgcolor: '#e10600',
                             '&:hover': {
                                 bgcolor: '#b30500',
                             }
                         }}
                     >
-                        View Current Standings
+                        Current Standings
                     </Button>
                 </Stack>
             </Box>
         </Container>
     );
 }
-//William Fugate
+//William Fugate + Kelvin Fang + Ethan Key

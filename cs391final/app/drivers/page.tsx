@@ -1,10 +1,7 @@
-import { fetchDrivers } from "../lib/api";
+//William Fugate
 import DriversClient from "../components/DriversClient";
-import { Driver } from "../types";
 
-
-export default async function DriversPage() {
-  const drivers = await fetchDrivers() as Driver[];
-  
-  return <DriversClient drivers={drivers} />;
+export default function DriversPage() {
+    return <DriversClient />;
 }
+//William Fugate

@@ -1,22 +1,22 @@
 //Kelvin Fang
-export interface ErgastRaceResult {
+export interface RaceResult {
     MRData: {
         RaceTable: {
-            Races: ErgastRace[];
+            Races: Race[];
         };
     };
 }
 
-export interface ErgastRace {
+export interface Race {
     season: string;
     round: string;
     raceName: string;
     date: string;
     time?: string;
-    Results: ErgastResult[];
+    Results: Result[];
 }
 
-export interface ErgastResult {
+export interface Result {
     number: string;
     position: string;
     points: string;
@@ -56,3 +56,19 @@ export interface ErgastResult {
     };
 }
 //Kelvin Fang
+//William Fugate
+export interface Driver {
+    broadcast_name: string;
+    country_code: string;
+    driver_number: string | number;
+    first_name: string;
+    full_name: string;
+    headshot_url: string;
+    last_name: string;
+    meeting_key: string;
+    name_acronym: string;
+    session_key: string;
+    team_colour: string;
+    team_name: string;
+  }
+//William Fugate

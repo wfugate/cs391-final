@@ -5,12 +5,12 @@ import { Container, Typography, Box, Button } from "@mui/material";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import RaceResultCard from "./RaceResultCard";
-import { ErgastRace } from "../types/ergast";
+import { Race } from "../types/ergast";
 import LoadingScreen from "./LoadingScreen";
 
 export default function ResultsClient() {
     const router = useRouter();
-    const [race, setRace] = useState<ErgastRace | null>(null);
+    const [race, setRace] = useState<Race | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
