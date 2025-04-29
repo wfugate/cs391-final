@@ -1,42 +1,66 @@
-//Kelvin Fang
+// Kelvin Fang
+
 
 'use client';
+
 
 import { Box, Typography, LinearProgress } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 
+
+// Define the props for the LoadingScreen component
 interface LoadingScreenProps {
+    // whether to display the progress bar
     showProgress?: boolean;
+    // whether the screen should auto-hide after data loads
     onDataLoaded?: boolean;
 }
 
-export default function LoadingScreen({
-                                          showProgress = true,
-                                          onDataLoaded = true
-                                      }: LoadingScreenProps) {
+
+// Main functional component
+export default function LoadingScreen({ showProgress = true, onDataLoaded = true }: LoadingScreenProps) {
+
+
+    // Ref to control and interact with the video element
     const videoRef = useRef<HTMLVideoElement>(null);
+
+
+    // Local state to track whether the loading screen is shown
     const [showLoading, setShowLoading] = useState(true);
+
+
+    // Local state to store loading progress (0–100)
     const [progress, setProgress] = useState(0);
+
+
+    // Local state to track if the video has finished playing
     const [videoEnded, setVideoEnded] = useState(false);
 
+
+    // Handle what happens when the video ends
     useEffect(() => {
         if (videoEnded) {
-
             if (onDataLoaded) {
                 setShowLoading(false);
             }
         }
     }, [videoEnded, onDataLoaded]);
 
+
+    // Set up video playback and progress tracking
     useEffect(() => {
         let progressInterval: NodeJS.Timeout;
 
+
         const setupVideo = () => {
             if (videoRef.current) {
+                // Mark video as ended when playback completes
                 videoRef.current.onended = () => {
                     setVideoEnded(true);
                 };
 
+
+                // Attempt to autoplay the video
                 try {
                     videoRef.current.play();
                 } catch (e) {
@@ -44,8 +68,12 @@ export default function LoadingScreen({
                 }
             }
 
+
+            // If progress bar should be shown, start updating it regularly
             if (showProgress) {
                 const updateInterval = 50;
+
+
                 progressInterval = setInterval(() => {
                     if (videoRef.current) {
                         const currentTime = videoRef.current.currentTime;
@@ -57,8 +85,12 @@ export default function LoadingScreen({
             }
         };
 
+
+        // Kick off the video and progress logic
         setupVideo();
 
+
+        // Cleanup on component unmount
         return () => {
             clearInterval(progressInterval);
             if (videoRef.current) {
@@ -67,25 +99,32 @@ export default function LoadingScreen({
         };
     }, [showProgress]);
 
+
+    // If loading is done, render nothing
     if (!showLoading) {
         return null;
     }
 
+
+    // Render the loading screen
     return (
-        <Box sx={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100%',
-            height: '100%',
-            display: 'flex',
-            flexDirection: 'column',
-            justifyContent: 'center',
-            alignItems: 'center',
-            backgroundColor: '#121212',
-            zIndex: 9999,
-            gap: 3
-        }}>
+        <Box
+            sx={{
+                position: 'fixed',
+                top: 0,
+                left: 0,
+                width: '100%',
+                height: '100%',
+                display: 'flex',
+                flexDirection: 'column',
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: '#121212',
+                zIndex: 9999,
+                gap: 3
+            }}
+        >
+            {/* Animated loading video */}
             <video
                 ref={videoRef}
                 autoPlay
@@ -102,6 +141,8 @@ export default function LoadingScreen({
                 Your browser does not support the video tag.
             </video>
 
+
+            {/* Loading text message */}
             <Typography
                 variant="h4"
                 component="div"
@@ -114,12 +155,17 @@ export default function LoadingScreen({
                 Loading Race Data...
             </Typography>
 
+
+            {/* Optional progress bar display */}
             {showProgress && (
-                <Box sx={{
-                    width: '80%',
-                    maxWidth: '400px',
-                    mt: 2
-                }}>
+                <Box
+                    sx={{
+                        width: '80%',
+                        maxWidth: '400px',
+                        mt: 2
+                    }}
+                >
+                    {/* Progress bar */}
                     <LinearProgress
                         variant="determinate"
                         value={progress}
@@ -133,6 +179,9 @@ export default function LoadingScreen({
                             }
                         }}
                     />
+
+
+                    {/* Percentage label below progress bar */}
                     <Typography
                         variant="body2"
                         sx={{
@@ -148,4 +197,7 @@ export default function LoadingScreen({
         </Box>
     );
 }
-//Kelvin Fang
+
+
+// Kelvin Fang
+
