@@ -12,14 +12,21 @@ export default function DriversClient() {
   const [drivers, setDrivers] = useState<Driver[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [isRequestPending, setIsRequestPending] = useState(false);
 
-  const fetchDrivers = async () => { //fetch drivers function to use api/drivers
-    const MIN_LOADING_TIME = 3000; // 3 seconds minimum loading time
+  const fetchDrivers = async () => {
+    //return early if a request is already in progress
+    if (isRequestPending) return;
+    
+    const MIN_LOADING_TIME = 3000; //3 seconds minimum loading time
     const start = Date.now();
     
     try {
+      setIsRequestPending(true);
       //fetch driver data from api route
-      const response = await fetch('/api/drivers');
+      const response = await fetch('/api/drivers', {
+        cache: 'no-store'
+      });
 
       if (!response.ok) { //ensure response is ok
         throw new Error(`Error: ${response.status}`)
@@ -30,6 +37,7 @@ export default function DriversClient() {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Unknown error');
     } finally {
+      setIsRequestPending(false);
       
       const elapsed = Date.now() - start;
       const remaining = MIN_LOADING_TIME - elapsed;
@@ -42,8 +50,13 @@ export default function DriversClient() {
     }
   };
 
-  useEffect(() => { //useEffect to fetch drivers on mount
-    fetchDrivers();
+  useEffect(() => {
+    //small timeout to prevent double fetching (rate limiting issue)
+    const timeoutId = setTimeout(() => {
+      fetchDrivers();
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
   }, []);
 
   if (loading) { //show loading screen if currently loading
@@ -52,11 +65,22 @@ export default function DriversClient() {
 
   if (error) { //show error message if there is an error
     return (
-      <Typography variant='h1' sx={
-        {
-          color: 'black',
-        }
-      }>Rate limit hit, refresh the page.</Typography>
+      <Container maxWidth="xl" sx={{ py: 4 }}>
+        <F1Header title='F1 Drivers' />
+        <Typography variant='h4' sx={{
+          color: '#e10600',
+          textAlign: 'center',
+          mt: 4
+        }}>
+          {error}
+        </Typography>
+        <Typography variant='body1' sx={{
+          textAlign: 'center',
+          mt: 2
+        }}>
+          Rate limit may have been reached. Please try again in a few minutes.
+        </Typography>
+      </Container>
     );
   }
   

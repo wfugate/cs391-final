@@ -134,7 +134,7 @@ export default function LoadingScreen({ showProgress = true, onDataLoaded = true
                     width: '90%',
                     height: '90%',
                     objectFit: 'contain',
-                    maxWidth: '800px'
+                    maxWidth: '90%'
                 }}
             >
                 <source src="/f1-formule1.mp4" type="video/mp4" />

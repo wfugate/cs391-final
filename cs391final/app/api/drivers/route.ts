@@ -11,6 +11,7 @@ export async function GET() { //get drivers from OpenF1 API
   try {
     //return cached data if available and fresh
     if (cachedData && Date.now() - cacheTime < CACHE_DURATION) {
+      console.log("Returning cached data", cachedData);
       return NextResponse.json(cachedData);
     }
     
