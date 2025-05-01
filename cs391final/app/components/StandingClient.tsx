@@ -1,4 +1,6 @@
 // Ethan Key
+// component to display standings of current f1 season
+
 'use client';
 
 import { Container, Typography, Box, Button, Stack, Card, CardContent } from "@mui/material";
@@ -6,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import LoadingScreen from "../components/LoadingScreen";
 
+//types for api data
 type DriverStanding = {
     position: string;
     points: string;
@@ -35,7 +38,9 @@ export default function StandingsClient() {
     const [error, setError] = useState<string | null>(null);
     const [view, setView] = useState<'drivers' | 'constructors'>('drivers');
 
+    //api call
     const fetchDriverStandings = async () => {
+        setLoading(true);
         try {
             const response = await fetch('/api/driver');
             if (!response.ok) throw new Error(`Error: ${response.status}`);
@@ -49,7 +54,9 @@ export default function StandingsClient() {
         }
     };
 
+    //api call
     const fetchConstructorStandings = async () => {
+        setLoading(true);
         try {
             const response = await fetch('/api/constructor');
             if (!response.ok) throw new Error(`Error: ${response.status}`);
@@ -63,10 +70,32 @@ export default function StandingsClient() {
         }
     };
 
+    //useEffect hook to load driver standings each time the page is loaded 
     useEffect(() => {
-        fetchDriverStandings();
+        const MIN_LOADING_TIME = 3300;
+        setLoading(true);
+    
+        const load = async () => {
+            const delayPromise = new Promise((res) => setTimeout(res, MIN_LOADING_TIME));
+    
+            try {
+                const response = await fetch('/api/driver');
+                if (!response.ok) throw new Error(`Error: ${response.status}`);
+                const data = await response.json();
+                const standingsList = data.MRData.StandingsTable.StandingsLists[0];
+                setDriverStandings(standingsList.DriverStandings || []);
+            } catch (err) {
+                setError(err instanceof Error ? err.message : 'Unknown error');
+            }
+    
+            await delayPromise;
+            setLoading(false); // only ends after both data + delay
+        };
+    
+        load();
     }, []);
 
+    //toggle logic to set view
     const handleToggleView = async (newView: 'drivers' | 'constructors') => {
         if (newView === view) return;
         setView(newView);
@@ -81,6 +110,7 @@ export default function StandingsClient() {
         return <LoadingScreen />;
     }
 
+    //error handling
     if (error) {
         return (
             <Container maxWidth="xl" sx={{ py: 4 }}>
@@ -102,6 +132,7 @@ export default function StandingsClient() {
         );
     }
 
+    //page layout
     return (
         <Container maxWidth="xl" sx={{ py: 4 }}>
             <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mb: 4 }}>
@@ -147,7 +178,8 @@ export default function StandingsClient() {
                 </Button>
             </Stack>
 
-            <Box sx={{
+            
+            <Box sx={{  // grid for standings data
                 display: 'grid',
                 gridTemplateColumns: {
                     xs: '1fr',
@@ -157,7 +189,7 @@ export default function StandingsClient() {
                 },
                 gap: 3
             }}>
-                {view === 'drivers' ? (
+                {view === 'drivers' ? ( //conditional statement depending on currently selected standings type
                     driverStandings.map((standing) => (
                         <Card key={standing.position} sx={{
                             background: 'linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%)',
