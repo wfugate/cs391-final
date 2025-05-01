@@ -70,7 +70,6 @@ export default function StandingsClient() {
     const handleToggleView = async (newView: 'drivers' | 'constructors') => {
         if (newView === view) return;
         setView(newView);
-        setLoading(true);
         if (newView === 'drivers') {
             fetchDriverStandings();
         } else {
